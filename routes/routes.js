@@ -51,8 +51,8 @@ router.get('/getOne/:id', (req, res)=> {
 router.patch('/update/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const { title, content, image } = req.body;
-        const updatedBlog = await ModelBlog.findByIdAndUpdate(id, { title, content, image }, { new: true });
+        const { title, content, image, image2, legend, legend2 } = req.body;
+        const updatedBlog = await ModelBlog.findByIdAndUpdate(id, { title, content, image, image2, legend, legend2 }, { new: true });
 
         if (!updatedBlog) {
             return res.status(404).json({ message: 'Blog not found.' });
