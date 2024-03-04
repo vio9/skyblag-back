@@ -29,22 +29,6 @@ router.post('/post', async (req, res) => {
     }
 });
 
-// post oh WOW
-
-router.post('/postOhwow', async (req, res) => {
-try {
-    const {title, image} = req.body;
-
-    const newOhWow = new ModelOhWow({
-        title:title,
-        image:image,
-    });
-    const savedOhWow = await newOhWow.save();
-    res.status(201).json({message: 'Oh Wow Post saved successfully.', ohWow : savedOhWow });
-} catch (error){
-    res.status(400).json({ message: error.message });
-}
-})
 
 //get all 
 router.get('/getAll', async (req, res) => {
@@ -58,25 +42,10 @@ router.get('/getAll', async (req, res) => {
     }
 });
 
-// get all oh WOW 
-
-router.get('/getAllOhWow', async (req, res) => {
-    try {
-        const dataOhWow = await ModelOhWow.find();
-        res.json(dataOhWow)
-    }
-    catch(error){
-        res.status(500).json({ message: error.message})
-    }
-})
-
-
 // get by id 
 router.get('/getOne/:id', (req, res)=> {
     res.send(req.params.id);
 } )
-
-
 
 // update by id
 router.patch('/update/:id', async (req, res) => {
@@ -109,6 +78,48 @@ router.delete('/delete/:id', async (req, res) => {
     }
 });
 
+// oh wow part
 
+router.post('/postOhwow', async (req, res) => {
+    try {
+        const {title, image} = req.body;
+    
+        const newOhWow = new ModelOhWow({
+            title:title,
+            image:image,
+        });
+        const savedOhWow = await newOhWow.save();
+        res.status(201).json({message: 'Oh Wow Post saved successfully.', ohWow : savedOhWow });
+    } catch (error){
+        res.status(400).json({ message: error.message });
+    }
+    })
+
+
+router.get('/getAllOhWow', async (req, res) => {
+    try {
+        const dataOhWow = await ModelOhWow.find();
+        res.json(dataOhWow)
+    }
+    catch(error){
+        res.status(500).json({ message: error.message})
+    }
+})
+
+// update
+router.patch('/update-wow/:id', async (req, res ) => {
+    try {
+        const {id} = req.params;
+        const {title, image} = req.body;
+        const updatedWow = await ModelOhWow.findByIdAndUpdate(id, {title, image}, {new:true});
+        
+        if(!updatedWow) {
+            return res.status(404).json({message : 'oh wow post not found.'})
+        }
+        res.status(200).json({message : 'oh wow post updated successfully', wow: updatedWow})
+    } catch(error){
+        res.status(500).json({message: error.message})
+    }
+})
 
 module.exports = router;
