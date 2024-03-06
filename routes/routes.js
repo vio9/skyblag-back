@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const ModelBlog = require('../model/modelBlog')
 const ModelOhWow = require('../model/modelOhWow');
+const ModelVideo = require('../model/modelVideo');
 
 //post 
 router.post('/post', async (req, res) => {
@@ -35,7 +36,6 @@ router.get('/getAll', async (req, res) => {
     try{
         const data = await ModelBlog.find();
         res.json(data)
-
     }
     catch(error){
         res.status(500).json({ message : error.message})
@@ -121,5 +121,46 @@ router.patch('/update-wow/:id', async (req, res ) => {
         res.status(500).json({message: error.message})
     }
 })
+
+// video part
+
+router.post('/post-video', async (req, res) => {
+    try {
+        const {title, src} = req.body;
+        const  newVideo = new ModelVideo({
+            title:title,
+            src:src,
+        });
+        const savedVideo = await newVideo.save();
+        res.status(201).json({message: 'video informations saved successfully', video:savedVideo})
+    } catch(error){
+        res.status(400).json({message: error.message});
+    }
+})
+
+router.get('/getAllVideos', async (req, res) => {
+    try{
+        const dataVideos = await ModelVideo.find();
+        res.json(dataVideos)
+        res.status(200);
+    }
+    catch(error){
+        res.status(500).json({message : error.message})
+    }
+});
+
+router.delete('/delete-videos/:id', async (req, res) => {
+    try{
+        const {id} = req.params;
+        const deletedVideo = await ModelVideo.findByIdAndDelete(id);
+        res.status(200).json({message:'video infos deleted successfully.'})
+    } 
+    catch(error){
+        if(!deletedVideo){
+            return res.status(404).json({ message: 'videos infos not found.'});
+        }
+        res.status(500).json({message : error.message});
+    }
+});
 
 module.exports = router;
