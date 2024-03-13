@@ -1,4 +1,5 @@
 require('dotenv').config();
+const helmet = require('helmet');
 const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
@@ -22,6 +23,12 @@ const routes = require('./routes/routes');
 const port = 4400;
 
 app.use('/api', routes)
+app.use(helmet());
+app.use(helmet.hidePoweredBy());
+app.use(helmet.frameguard({ action: 'deny' }));
+app.use(helmet.noSniff());
+app.use(helmet.ieNoOpen());
+
 
 app.listen(port, () => {
     console.log(`Server Started at ${port}`)
