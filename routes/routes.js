@@ -3,9 +3,6 @@ const router = express.Router();
 const ModelBlog = require('../model/modelBlog')
 const ModelOhWow = require('../model/modelOhWow');
 const ModelVideo = require('../model/modelVideo');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-
 
 
 //post 
