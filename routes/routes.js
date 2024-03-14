@@ -3,13 +3,16 @@ const router = express.Router();
 const ModelBlog = require('../model/modelBlog')
 const ModelOhWow = require('../model/modelOhWow');
 const ModelVideo = require('../model/modelVideo');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+
+
 
 //post 
 router.post('/post', async (req, res) => {
     try {
         const { title, content1, content2, content3, image, legend, image2, legend2} = req.body;
 
-        // Créez un nouveau blog avec le lien externe pour l'image
         const newBlog = new ModelBlog({
             title: title,
             content1: content1,
@@ -21,7 +24,6 @@ router.post('/post', async (req, res) => {
             legend2: legend2
         });
 
-        // Enregistrez le blog dans la base de données
         const savedBlog = await newBlog.save();
         
         res.status(201).json({ message: 'Blog post saved successfully.', blog: savedBlog });

@@ -29,6 +29,12 @@ app.use(helmet.frameguard({ action: 'deny' }));
 app.use(helmet.noSniff());
 app.use(helmet.ieNoOpen());
 
+const errorHandler = (err, req, res, next) => {
+console.error(err)
+res.status(500).json({error: "Erreur du serveur"})
+};
+
+app.use(errorHandler);
 
 app.listen(port, () => {
     console.log(`Server Started at ${port}`)
