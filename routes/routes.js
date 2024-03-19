@@ -3,7 +3,8 @@ const router = express.Router();
 const ModelBlog = require('../model/modelBlog')
 const ModelOhWow = require('../model/modelOhWow');
 const ModelVideo = require('../model/modelVideo');
-
+const ModelEnVrac = require('../model/modelEnVrac');
+const modelEnVrac = require('../model/modelEnVrac');
 
 //post 
 router.post('/post', async (req, res) => {
@@ -29,8 +30,6 @@ router.post('/post', async (req, res) => {
     }
 });
 
-
-//get all 
 router.get('/getAll', async (req, res) => {
     try{
         const data = await ModelBlog.find();
@@ -41,12 +40,10 @@ router.get('/getAll', async (req, res) => {
     }
 });
 
-// get by id 
 router.get('/getOne/:id', (req, res)=> {
     res.send(req.params.id);
 } )
 
-// update by id
 router.patch('/update/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -62,22 +59,20 @@ router.patch('/update/:id', async (req, res) => {
     }
 });
 
-// delete by id
 router.delete('/delete/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const deletedBlog = await ModelBlog.findByIdAndDelete(id);
-
-        res.status(200).json({ message: 'Blog deleted successfully.' });
-    } catch (error) {
         if (!deletedBlog) {
             return res.status(404).json({ message: 'Blog not found.' });
         }
+        res.status(200).json({ message: 'Blog deleted successfully.' });
+    } catch (error) {
         res.status(500).json({ message: error.message });
     }
 });
 
-// oh wow part
+// oh wow 
 
 router.post('/postOhwow', async (req, res) => {
     try {
@@ -105,7 +100,6 @@ router.get('/getAllOhWow', async (req, res) => {
     }
 })
 
-// update
 router.patch('/update-wow/:id', async (req, res ) => {
     try {
         const {id} = req.params;
@@ -116,6 +110,45 @@ router.patch('/update-wow/:id', async (req, res ) => {
             return res.status(404).json({message : 'oh wow post not found.'})
         }
         res.status(200).json({message : 'oh wow post updated successfully', wow: updatedWow})
+    } catch(error){
+        res.status(500).json({message: error.message})
+    }
+})
+
+// En vrac 
+router.post('/post-enVrac', async (req, res) => {
+    try{
+       const {title, content, image} = req.body;
+       const newEnVrac = new ModelEnVrac({
+            title:title,
+            content:content,
+            image:image,
+       });
+       const savedEnVRac = await newEnVrac.save();
+       res.status(201).json({message: 'enVrac informations saved successfully', enVrac:savedEnVRac})
+    } catch(error){
+        res.status(400).json({message: error.message});
+    }
+});
+
+router.get('/getAllEnVrac', async (req, res) => {
+    try{
+        const dataEnVrac = await modelEnVrac.find();
+        res.json(dataEnVrac)
+    } catch(error){
+        res.status(500).json({message: error.message})
+    }
+})
+
+router.patch('updateEnVrac/:id', async (req, res)=> {
+    try{
+        const {id} =req.params;
+        const {title, image, content} = req.body;
+        const updatedEnVrac = await ModelEnVrac.findByIdAndUpdate(id, {title, image, content}, {new:true});
+        if(!updatedEnVrac){
+            return res.status(404).json({message: 'en Vrac post not found'});
+        }
+        res.status(200).json({message: 'En vrac post updated successfully', enVrac:updatedEnVrac})
     } catch(error){
         res.status(500).json({message: error.message})
     }
@@ -151,13 +184,13 @@ router.get('/getAllVideos', async (req, res) => {
 router.delete('/delete-videos/:id', async (req, res) => {
     try{
         const {id} = req.params;
-        const deletedVideo = await ModelVideo.findByIdAndDelete(id);
-        res.status(200).json({message:'video infos deleted successfully.'})
-    } 
-    catch(error){
+        const deletedVideo = await ModelVideo.findByIdAndDelete(id); 
         if(!deletedVideo){
             return res.status(404).json({ message: 'videos infos not found.'});
         }
+        res.status(200).json({message:'video infos deleted successfully.'})
+    } 
+    catch(error){
         res.status(500).json({message : error.message});
     }
 });
