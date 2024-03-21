@@ -21,7 +21,7 @@ app.use(cors())
 app.use(express.json());
 
 const routes = require('./routes/routes');
-const port = process.env.PORT || 4400;
+const port = process.env.PORT || 5500;
 
 app.use('/api', routes)
 app.use(helmet());
@@ -37,11 +37,8 @@ res.status(500).json({error: "Erreur du serveur"})
 
 app.use(errorHandler);
 
-app.listen(port, () => {
-    console.log(`Server Started at ${port}`)
-})
 
-connectDB.then(() => {
+connectDB().then(() => {
     app.listen(port, ()=> {
         console.log("let's go for request yeah")
     })
