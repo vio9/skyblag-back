@@ -9,7 +9,7 @@ const connectDB = async () => {
     try{
         const conn = await mongoose.connect(mongoString);
     } catch(error){
-        process.exit(1)
+       console.log(error)
     }
 }
 
@@ -18,7 +18,7 @@ app.use(cors())
 app.use(express.json());
 
 const routes = require('./routes/routes');
-const port = process.env.PORT || 5500;
+const port = process.env.PORT || 3000
 
 app.use('/api', routes)
 app.use(helmet());
