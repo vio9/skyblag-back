@@ -6,8 +6,6 @@ const ModelVideo = require('../model/modelVideo');
 const ModelEnVrac = require('../model/modelEnVrac');
 const modelEnVrac = require('../model/modelEnVrac');
 
-
-
 // general 
 
 router.get('/', async (req, res) => {
@@ -81,7 +79,6 @@ router.delete('/delete/:id', async (req, res) => {
 });
 
 // oh wow 
-
 router.post('/postOhwow', async (req, res) => {
     try {
         const {title, image} = req.body;
