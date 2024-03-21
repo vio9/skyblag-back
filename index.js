@@ -15,12 +15,13 @@ database.on('error', (error) => {
 database.once('connected', () => {
     console.log('Database Connected');
 })
+
 const app = express();
 app.use(cors())
 app.use(express.json());
 
 const routes = require('./routes/routes');
-const port = 4400;
+const port = process.env.PORT || 4400;
 
 app.use('/api', routes)
 app.use(helmet());

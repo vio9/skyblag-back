@@ -6,6 +6,14 @@ const ModelVideo = require('../model/modelVideo');
 const ModelEnVrac = require('../model/modelEnVrac');
 const modelEnVrac = require('../model/modelEnVrac');
 
+
+
+// general 
+
+router.get('/', async (req, res) => {
+    res.send({title:'hello on data skyblag'})
+})
+
 //post 
 router.post('/post', async (req, res) => {
     try {
