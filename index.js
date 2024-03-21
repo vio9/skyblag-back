@@ -15,7 +15,6 @@ const connectDB = async () => {
     }
 }
 
-
 const app = express();
 app.use(cors())
 app.use(express.json());
@@ -36,7 +35,6 @@ res.status(500).json({error: "Erreur du serveur"})
 };
 
 app.use(errorHandler);
-
 
 connectDB().then(() => {
     app.listen(port, ()=> {
