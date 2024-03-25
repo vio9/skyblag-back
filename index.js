@@ -11,9 +11,9 @@ const routes = require('./routes/routes');
 const connectDB = async () => {
     try{
         const conn = await mongoose.connect(mongoString);
-        console.log(`connected on ${conn.connection.host}`)
+        console.log(`connected`)
     } catch(error){
-       console.log(error);
+        console.error('Error connecting to MongoDB:', error);
        process.exit(1);
     }
 }
