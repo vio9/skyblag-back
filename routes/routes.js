@@ -78,7 +78,7 @@ router.delete('/delete/:id', async (req, res) => {
     }
 });
 
-// oh wow 
+// ohWow 
 router.post('/postOhwow', async (req, res) => {
     try {
         const {title, image} = req.body;
@@ -145,7 +145,7 @@ router.get('/getAllEnVrac', async (req, res) => {
     }
 })
 
-router.patch('updateEnVrac/:id', async (req, res)=> {
+router.patch('/updateEnVrac/:id', async (req, res)=> {
     try{
         const {id} =req.params;
         const {title, image, content} = req.body;
@@ -156,6 +156,19 @@ router.patch('updateEnVrac/:id', async (req, res)=> {
         res.status(200).json({message: 'En vrac post updated successfully', enVrac:updatedEnVrac})
     } catch(error){
         res.status(500).json({message: error.message})
+    }
+})
+
+router.delete('/deleteEnVrac:id', async (req, res) => {
+    try{
+        const {id} = req.params;
+        const deletedEnVrac = await ModelEnVrac.findByIdAndDelete(id);
+        if(!deletedEnVrac){
+            return res.status(404).json({message: 'en vrac post not found.'});
+        }
+        res.status(200).json({message: 'en vrac post deleted successfully.'})
+    } catch (error){
+        res.status(500).json({message: error.message});
     }
 })
 
