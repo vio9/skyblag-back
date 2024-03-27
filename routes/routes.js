@@ -199,6 +199,21 @@ router.get('/getAllVideos', async (req, res) => {
     }
 });
 
+router.patch('/updateVideo/:id', async (req, res)=> {
+    try{
+        const {id} =req.params;
+        const {title, src} = req.body;
+        const updatedVideo= await ModelVideo.findByIdAndUpdate(id, {title, src}, {new:true});
+        if(!updatedVideo){
+            return res.status(404).json({message: 'Video post not found'});
+        }
+        res.status(200).json({message: 'Video updated successfully', video:updatedVideo})
+    } catch(error){
+        res.status(500).json({message: error.message})
+    }
+})
+
+
 router.delete('/delete-videos/:id', async (req, res) => {
     try{
         const {id} = req.params;
