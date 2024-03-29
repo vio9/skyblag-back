@@ -5,6 +5,7 @@ const ModelOhWow = require('../model/modelOhWow');
 const ModelVideo = require('../model/modelVideo');
 const ModelEnVrac = require('../model/modelEnVrac');
 const modelEnVrac = require('../model/modelEnVrac');
+const ModelQuiz = require('../model/modelQuiz');
 
 // general 
 
@@ -227,5 +228,36 @@ router.delete('/delete-videos/:id', async (req, res) => {
         res.status(500).json({message : error.message});
     }
 });
+
+//quiz
+
+router.post('/postQuiz', async (req, res) => {
+    try{
+        const {question, reponse1, reponse2, reponse3, reponse4 } = req.body;
+
+        const newQuiz = new ModelQuiz({
+            question: question,
+            reponse1:reponse1,
+            reponse2:reponse2,
+            reponse3:reponse3,
+            reponse4:reponse4,
+        })
+        const savedQuiz = await newQuiz.save();
+
+        res.status(201).json({message: "quiz post successfully", quiz: savedQuiz})
+    } catch(error){
+        res.status(400).json({ message: error.message})
+    }
+})
+
+router.get('/getAllQuiz', async (req, res) => {
+    try{
+        const data = await ModelQuiz.find();
+        res.json(data)
+    }
+    catch(error){
+        res.status(500).json({message:'quiz not find'})
+    }
+})
 
 module.exports = router;
