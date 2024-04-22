@@ -5,7 +5,9 @@ const ModelOhWow = require('../model/modelOhWow');
 const ModelVideo = require('../model/modelVideo');
 const ModelEnVrac = require('../model/modelEnVrac');
 const modelEnVrac = require('../model/modelEnVrac');
-const ModelQuiz = require('../model/modelQuiz');
+const modelQuestionQuiz = require('../model/modelQuestionQuiz');
+const modelResponseQuiz = require('../model/modelResponseQuiz');
+
 
 // general 
 
@@ -231,5 +233,53 @@ router.delete('/delete-videos/:id', async (req, res) => {
 
 //quiz
 
+router.post('/postQuestion', async (req, res) => {
+    try{
+        const {question, numeroQuestion } = req.body;
+        const newQuestion = new modelQuestionQuiz({
+            question:question,
+            numeroQuestion:numeroQuestion
+        });
+
+        const savedQuestion = await newQuestion.save();
+        res.status(201).json({ message : 'question saved successfully', question: savedQuestion });
+    } catch(error){
+        res.status(400).json({ message : error.message});
+    }
+})
+
+router.get('/getAllQuestions', async (req, res) => {
+    try {
+        const data = await modelQuestionQuiz.find();
+        res.json(data)
+    } catch(error){
+        res.status(500).json({message : error.message})
+    }
+});
+
+
+router.post('/postAnswser', async (req, res) => {
+    try{
+        const {text, scoreType } = req.body;
+        const newAnswer = new modelResponseQuiz.find({
+            text:text,
+           scoreType:scoreType
+        });
+
+        const savedAnswer = await newAnswer.save();
+        res.status(201).json({ message : 'answer saved successfully', answer: savedAnswer });
+    } catch(error){
+        res.status(400).json({ message : error.message});
+    }
+})
+
+router.get('/getAllAnswers', async (req, res) => {
+    try {
+        const data = await modelResponseQuiz.find();
+        res.json(data)
+    } catch(error){
+        res.status(500).json({message : error.message})
+    }
+});
 
 module.exports = router;
