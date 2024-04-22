@@ -5,8 +5,7 @@ const ModelOhWow = require('../model/modelOhWow');
 const ModelVideo = require('../model/modelVideo');
 const ModelEnVrac = require('../model/modelEnVrac');
 const modelEnVrac = require('../model/modelEnVrac');
-const modelQuestionQuiz = require('../model/modelQuestionQuiz');
-const modelResponseQuiz = require('../model/modelResponseQuiz');
+const modelQuiz = require('../model/modelQuiz');
 
 
 // general 
@@ -233,53 +232,39 @@ router.delete('/delete-videos/:id', async (req, res) => {
 
 //quiz
 
-router.post('/postQuestion', async (req, res) => {
+router.post('/postQuiz', async (req, res) => {
     try{
-        const {question, numeroQuestion } = req.body;
-        const newQuestion = new modelQuestionQuiz({
+        const {question, numeroQuestion, answer1, answer1Score, 
+            answer2, answer2Score, answer3, answer3Score, answer4, answer4Score, 
+        } = req.body;
+        const newQuiz = new modelQuiz({
             question:question,
-            numeroQuestion:numeroQuestion
+            numeroQuestion:numeroQuestion,
+            answer1:answer1,
+            answer1Score: answer1Score,
+            answer2:answer2,
+            answer2Score:answer2Score,
+            answer3:answer3,
+            answer3Score:answer3Score, 
+            answer4:answer4,
+            answer4Score:answer4Score
         });
 
-        const savedQuestion = await newQuestion.save();
-        res.status(201).json({ message : 'question saved successfully', question: savedQuestion });
+        const savedQuiz= await newQuiz.save();
+        res.status(201).json({ message : 'question saved successfully', quiz: savedQuiz });
     } catch(error){
         res.status(400).json({ message : error.message});
     }
 })
 
-router.get('/getAllQuestions', async (req, res) => {
+router.get('/getAllQuiz', async (req, res) => {
     try {
-        const data = await modelQuestionQuiz.find();
+        const data = await modelQuiz.find();
         res.json(data)
     } catch(error){
         res.status(500).json({message : error.message})
     }
 });
 
-
-router.post('/postAnswser', async (req, res) => {
-    try{
-        const {text, scoreType } = req.body;
-        const newAnswer = new modelResponseQuiz.find({
-            text:text,
-           scoreType:scoreType
-        });
-
-        const savedAnswer = await newAnswer.save();
-        res.status(201).json({ message : 'answer saved successfully', answer: savedAnswer });
-    } catch(error){
-        res.status(400).json({ message : error.message});
-    }
-})
-
-router.get('/getAllAnswers', async (req, res) => {
-    try {
-        const data = await modelResponseQuiz.find();
-        res.json(data)
-    } catch(error){
-        res.status(500).json({message : error.message})
-    }
-});
 
 module.exports = router;
