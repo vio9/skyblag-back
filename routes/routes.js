@@ -267,7 +267,7 @@ router.get('/getAllQuiz', async (req, res) => {
     }
 });
 
-router.post('/postTotemAnimal', async (req, res) => {
+router.post('/postAnimalTotem', async (req, res) => {
     try{
         const { name, image, description1, description2} = req.body;
         const newAnimalTotem = new modelAnimalTotem({
