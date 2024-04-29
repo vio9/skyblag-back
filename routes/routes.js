@@ -6,7 +6,7 @@ const ModelVideo = require('../model/modelVideo');
 const ModelEnVrac = require('../model/modelEnVrac');
 const modelEnVrac = require('../model/modelEnVrac');
 const modelQuiz = require('../model/modelQuiz');
-
+const modelAnimalTotem = require('../model/modelAnimal');
 
 // general 
 
@@ -267,5 +267,29 @@ router.get('/getAllQuiz', async (req, res) => {
     }
 });
 
+router.post('/postTotemAnimal', async (req, res) => {
+    try{
+        const { name, image, description1, description2} = req.body;
+        const newAnimalTotem = new modelAnimalTotem({
+            name:name,
+            image:image,
+            description1:description1,
+            description2:description2
+        });
+        const savedAnimalTotem = await newAnimalTotem.save();
+        res.status(201).json({message: "animal totem saved successfully", animalTotem: animalTotem})
+    } catch(error){
+        res.status(400).json({message : error.message});
+    }
+})
+
+router.get('/getAllAnimalsTotem', async(req, res) => {
+    try{
+        const data = await modelAnimalTotem.find();
+        res.json(data)
+    } catch(error){
+        res.status(500).json({message : error.message})
+    }
+})
 
 module.exports = router;
