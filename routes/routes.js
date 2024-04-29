@@ -292,4 +292,17 @@ router.get('/getAllAnimalsTotem', async(req, res) => {
     }
 })
 
+router.delete('/deleteAnimalTotem', async(req, res) => {
+    try{
+        const {id} = req.params;
+        const deletedAnimalTotem = await modelAnimalTotem.findByIdAndDelete(id); 
+        if(!deletedAnimalTotem){
+            return res.status(404).json({ message: 'animal totem not found.'});
+        }
+        res.status(200).json({message:'animal totem deleted successfully.'})
+    } 
+    catch(error){
+        res.status(500).json({message : error.message});
+    }
+})
 module.exports = router;
