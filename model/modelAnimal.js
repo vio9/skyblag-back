@@ -4,7 +4,8 @@ const animalTotemSchema = new mongoose.Schema({
     name:String,
     image:String,
     description1:String,
-    description2:String
+    description2:String,
+    conseil:String
 })
 
 module.exports = mongoose.model('AnimalTotem', animalTotemSchema);
