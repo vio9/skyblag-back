@@ -269,13 +269,14 @@ router.get('/getAllQuiz', async (req, res) => {
 
 router.post('/postAnimalTotem', async (req, res) => {
     try{
-        const { name, image, description1, description2, conseil} = req.body;
+        const { name, image, description1, description2, conseil, legend} = req.body;
         const newAnimalTotem = new modelAnimalTotem({
             name:name,
             image:image,
             description1:description1,
             description2:description2,
             conseil:conseil,
+            legend:legend,
         });
         const savedAnimalTotem = await newAnimalTotem.save();
         res.status(201).json({message: "animal totem saved successfully", animalTotem: savedAnimalTotem})
