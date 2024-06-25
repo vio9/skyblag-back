@@ -248,6 +248,8 @@ router.post('/postQuiz', async (req, res) => {
             answer3Score:answer3Score, 
             answer4:answer4,
             answer4Score:answer4Score,
+            answer5:answer5,
+            answer5Score:answer5Score,
             image:image
         });
 
