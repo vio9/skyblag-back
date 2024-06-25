@@ -235,7 +235,8 @@ router.delete('/delete-videos/:id', async (req, res) => {
 router.post('/postQuiz', async (req, res) => {
     try{
         const {question, numeroQuestion, answer1, answer1Score, 
-            answer2, answer2Score, answer3, answer3Score, answer4, answer4Score,image 
+            answer2, answer2Score, answer3, answer3Score, answer4, answer4Score, 
+            answer5, answer5Score,image 
         } = req.body;
         const newQuiz = new modelQuiz({
             question:question,
