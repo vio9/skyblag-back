@@ -267,6 +267,8 @@ router.get('/getAllQuiz', async (req, res) => {
     }
 });
 
+// animal totem 
+
 router.post('/postAnimalTotem', async (req, res) => {
     try{
         const { name, image, description1, description2, conseil, legend} = req.body;
@@ -282,6 +284,21 @@ router.post('/postAnimalTotem', async (req, res) => {
         res.status(201).json({message: "animal totem saved successfully", animalTotem: savedAnimalTotem})
     } catch(error){
         res.status(400).json({message : error.message});
+    }
+})
+
+router.patch('/patchAnimalTotem', async(req, res) => {
+    try{
+        const {id} = req.params;
+        const {name, image, description1, description2, conseil, legend } = req.body;
+        const updatedAnimalTotem = await modelAnimalTotem.findByIdAndUpdate
+        (id, {name, image, description1, description2, conseil, legend}, {new:true});
+        if(!updatedAnimalTotem){
+            return res.status(404).json({ message: 'Animal Totem not found.'});
+        } 
+        res.status(200).json({ message : 'animal totem updated with success', animalTotem : updatedAnimalTotem})
+    } catch(error){
+        res.status(500).json({ message: error.message})
     }
 })
 
