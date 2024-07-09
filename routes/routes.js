@@ -230,6 +230,40 @@ router.delete('/delete-videos/:id', async (req, res) => {
     }
 });
 
+
+// series 
+
+router.post('/post-serie', async (req, res) => {
+    try {
+        const {title, src} = req.body;
+        const newSerie = new ModelVideo({
+            title:title,
+            src:src,
+        });
+        const savedSerie = await newSerie.save();
+        res.status(201).json({message: 'serie saved with success', serie:savedSerie})
+    } catch(error){
+        res.status(400).json({message:error.message});
+    }
+})
+
+router.get('/getAllSeries', async (req, res) => {
+    try{
+        const dataSeries = await ModelVideo.find();
+        res.json(dataSeries)
+        res.status(200);
+    }
+    catch(error){
+        res.status(500).json({message : error.message})
+    }
+});
+
+
+
+
+
+
+
 //quiz
 
 router.post('/postQuiz', async (req, res) => {
