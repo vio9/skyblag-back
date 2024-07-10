@@ -265,7 +265,7 @@ router.post('/postQuiz', async (req, res) => {
     try{
         const {question, numeroQuestion, answer1, answer1Score, 
             answer2, answer2Score, answer3, answer3Score, answer4, answer4Score, 
-            answer5, answer5Score,image 
+            answer5, answer5Score, answer6, answer6Score, image 
         } = req.body;
         const newQuiz = new modelQuiz({
             question:question,
@@ -280,6 +280,8 @@ router.post('/postQuiz', async (req, res) => {
             answer4Score:answer4Score,
             answer5:answer5,
             answer5Score:answer5Score,
+            answer6:answer6,
+            answer6Score:answer6Score,
             image:image
         });
 

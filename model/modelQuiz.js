@@ -13,7 +13,9 @@ const quizSchema = new mongoose.Schema({
     answer4Score:String, 
     answer5:String,
     answer5Score: String,
-    image:String
+    answer6:String,
+    answer6Score:String,
+    image:String, 
 
 })
 
