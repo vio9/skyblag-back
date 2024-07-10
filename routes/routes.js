@@ -7,6 +7,7 @@ const ModelEnVrac = require('../model/modelEnVrac');
 const modelEnVrac = require('../model/modelEnVrac');
 const modelQuiz = require('../model/modelQuiz');
 const modelAnimalTotem = require('../model/modelAnimal');
+const ModelSeries = require('../model/modelSeries');
 
 // general 
 
@@ -236,7 +237,7 @@ router.delete('/delete-videos/:id', async (req, res) => {
 router.post('/post-serie', async (req, res) => {
     try {
         const {title, src} = req.body;
-        const newSerie = new ModelVideo({
+        const newSerie = new ModelSeries({
             title:title,
             src:src,
         });
@@ -249,7 +250,7 @@ router.post('/post-serie', async (req, res) => {
 
 router.get('/getAllSeries', async (req, res) => {
     try{
-        const dataSeries = await ModelVideo.find();
+        const dataSeries = await ModelSeries.find();
         res.json(dataSeries)
         res.status(200);
     }
@@ -257,12 +258,6 @@ router.get('/getAllSeries', async (req, res) => {
         res.status(500).json({message : error.message})
     }
 });
-
-
-
-
-
-
 
 //quiz
 
