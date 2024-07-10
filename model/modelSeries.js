@@ -5,4 +5,4 @@ const SeriesSchema = new mongoose.Schema({
     src:String,
 })
 
-module.exports = mongoose.model('Video', SeriesSchema);
+module.exports = mongoose.model('Serie', SeriesSchema);
