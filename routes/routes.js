@@ -321,7 +321,7 @@ router.post('/postAnimalTotem', async (req, res) => {
     }
 })
 
-router.patch('/patchAnimalTotem', async(req, res) => {
+router.patch('/updateAnimalTotem/:id', async(req, res) => {
     try{
         const {id} = req.params;
         const {name, image, description1, description2, conseil, legend } = req.body;
