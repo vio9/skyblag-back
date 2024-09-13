@@ -316,7 +316,7 @@ router.patch('/updateQuiz/:id', async(req, res) => {
             updatedData,
             {new : true}
         )
-        res.status(200).json(updatedQuiz);
+        res.status(200).json({message: "quiz updated successfully", quiz: updatedQuiz});
 
     } catch(error){
         res.status(500).json({message : error.message})
