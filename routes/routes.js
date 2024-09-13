@@ -301,6 +301,28 @@ router.get('/getAllQuiz', async (req, res) => {
     }
 });
 
+router.patch('/updateQuiz/:id', async(req, res) => {
+    try{
+        const { id } = req.params;
+        const updatedData = {};
+
+        for(let key in req.body){
+            if(req.body[key] !== undefined){
+                updatedData[key] = req.body[key]
+            }
+        }
+        const updatedQuiz = await modelQuiz.findByIdAndUpdate(
+            id, 
+            updatedData,
+            {new : true}
+        )
+        res.status(200).json(updatedQuiz);
+
+    } catch(error){
+        res.status(500).json({message : error.message})
+    }
+})
+
 // animal totem 
 
 router.post('/postAnimalTotem', async (req, res) => {
